@@ -1,18 +1,17 @@
 import { pool } from "../db.js";
 
-
-export const getTasks = async (req, resp)=> {
+export const getTasks = async (req, resp) => {
   try {
     const [rows, fields] = await pool.query(
       "SELECT * FROM task ORDER BY created_at ASC"
     );
     resp.json(rows);
   } catch (error) {
-    return resp.status(500).json({message: error.message})
+    return resp.status(500).json({ message: error.message });
   }
-    
-}
-export const getTask = async(req, resp) => {
+};
+
+export const getTask = async (req, resp) => {
   try {
     console.log(req.params.id);
     const [result] = await pool.query(
@@ -27,9 +26,9 @@ export const getTask = async(req, resp) => {
   } catch (error) {
     return resp.status(500).json({ message: error.message });
   }
- };
+};
 
-export const createTasks = async  (req, resp) => {
+export const createTasks = async (req, resp) => {
   try {
     const { title, description } = req.body;
     // query returns a [ ]
@@ -46,8 +45,8 @@ export const createTasks = async  (req, resp) => {
   } catch (error) {
     return resp.status(500).json({ message: error.message });
   }
-  
 };
+
 export const updateTasks = async (req, resp) => {
   try {
     const result = await pool.query("UPDATE task SET ? WHERE id = ?", [
@@ -59,8 +58,8 @@ export const updateTasks = async (req, resp) => {
   } catch (error) {
     return resp.status(500).json({ message: error.message });
   }
-  
 };
+
 export const deleteTasks = async (req, resp) => {
   try {
     //const task = await getSingleTask(req.params.id);
@@ -78,6 +77,4 @@ export const deleteTasks = async (req, resp) => {
   } catch (error) {
     return resp.status(500).json({ message: error.message });
   }
-  
 };
-

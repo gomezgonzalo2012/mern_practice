@@ -1,0 +1,30 @@
+.task-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 10px;
+}
+
+.task-card{
+    
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px  rgb(226, 177, 43);
+    padding: 10px; 
+}
+.task-card .title{
+    text-align: center;
+}
+.card-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.card-header button{
+    border: none;
+    border-radius: 3px;
+    padding: 3px 5px;
+    margin-right:2px ;
+}
+
+.card-header button:hover{
+    cursor: pointer;
+}
