@@ -1,27 +1,52 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Formik } from 'formik'
-import {createTaskRequest, createTaskRequestFetch} from '../api/taskService.js'
+import { useTasks} from '../context/TaskContextProvider.jsx'
+import { useNavigate, useParams } from 'react-router'
+
 
 function TaskForm() {
+    // usando custom hook
+    const { createTask, findTask, updateTask } = useTasks()
+    // util cuando se esta editando
+    const [task, setTask] = useState({
+        title: "",
+        description: ""
+    })
+    const params = useParams()
+    console.log("Id ",params)
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+        const loadTask =async (id)=>{
+            const retrievedTask = await findTask(id)
+            console.log(retrievedTask);
+            setTask({
+                title: retrievedTask.title,
+                description: retrievedTask.description
+            })
+        }
+        if(params.id){
+            loadTask(params.id)
+        }
+    },[params.id])
     return (
         <div>
+            <h2>{
+                params.id ? "Edit Task" : "New Task"}</h2>
             <Formik // maneja el estado sin use state
-                initialValues={{
-                    title: "", // deben coincidir con el atributo name
-                    description: ""
-                }}
+                initialValues={task }
+                enableReinitialize={true}
                 onSubmit={async (values, actions)=>{
                     console.log(values)
-                    try{
-                        const response = await createTaskRequest(values)
-                        console.log(response)
+                    if(params.id){
+                        await updateTask(params.id, values)
+                        navigate("/")
+                    }else{
+                        await createTask(values)
                         // limpia los campos
                         actions.resetForm()
-                    }catch(error){
-                        console.error(error);
-
                     }
-                    
+                        
 
                 }}
             >

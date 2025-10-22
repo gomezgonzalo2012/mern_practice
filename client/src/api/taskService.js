@@ -29,7 +29,16 @@ const createTaskRequestFetch = (task) => {
     .then(response => console.log(response));
 };
 
-const getTasks = async()=>( axios.get(URL))
-const deleteTask = async(id)=> (axios.delete(`${URL}/${id}`))
+const getTasksRequest = async()=>( axios.get(URL))
+const findTaskRequest = async (id) => axios.get(`${URL}/${id}`);
+const deleteTaskRequest = async(id)=> (axios.delete(`${URL}/${id}`))
+const updateTaskRequest = async (id, newTask) => axios.put(`${URL}/${id}`, newTask);
   
-export { createTaskRequest, createTaskRequestFetch, getTasks, deleteTask };
+export {
+  createTaskRequest,
+  createTaskRequestFetch,
+  getTasksRequest,
+  findTaskRequest,
+  deleteTaskRequest,
+  updateTaskRequest
+};

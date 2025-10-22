@@ -22,7 +22,7 @@ export const getTask = async (req, resp) => {
       return resp.status(404).json({ message: "Task not found" });
     }
 
-    resp.json(result);
+    resp.json(result[0]);
   } catch (error) {
     return resp.status(500).json({ message: error.message });
   }
