@@ -33,6 +33,7 @@ const getTasksRequest = async()=>( axios.get(URL))
 const findTaskRequest = async (id) => axios.get(`${URL}/${id}`);
 const deleteTaskRequest = async(id)=> (axios.delete(`${URL}/${id}`))
 const updateTaskRequest = async (id, newTask) => axios.put(`${URL}/${id}`, newTask);
+const toggleTaskRequest = async (id) => axios.patch(`${URL}/toggle/${id}`);
   
 export {
   createTaskRequest,
@@ -40,5 +41,6 @@ export {
   getTasksRequest,
   findTaskRequest,
   deleteTaskRequest,
-  updateTaskRequest
+  updateTaskRequest,
+  toggleTaskRequest,
 };

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { deleteTaskRequest, getTasksRequest, createTaskRequest, findTaskRequest, updateTaskRequest } from "../api/taskService";
+import { deleteTaskRequest, getTasksRequest, createTaskRequest, findTaskRequest, updateTaskRequest, toggleTaskRequest } from "../api/taskService";
 import { TaskContext } from "./TaskContext";
 
 
@@ -70,9 +70,22 @@ export const TaskContextProvider = ({children})=>{
 
         }
     }
+    // toggle task
+    const toggleTask = async (id)=>{
+        try {
+            const response = await toggleTaskRequest(id)
+            console.log(response)
+            setTasks(
+                tasks.map(task => 
+                    task.id === id ? {...task, done : !task.done} : task)
+                )
+        } catch (error) {
+            console.error(error)
+        }
+    }
     return(
         // todos el sub-arbol de componentes debe estar dentro del proveedor de contexto
-        <TaskContext.Provider value={{ tasks, loadTasks, deleteTask, createTask, findTask, updateTask }}>  
+        <TaskContext.Provider value={{ tasks, loadTasks, deleteTask, createTask, findTask, updateTask, toggleTask }}>  
             {children}
         </TaskContext.Provider>
     )

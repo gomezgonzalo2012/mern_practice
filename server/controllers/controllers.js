@@ -78,3 +78,13 @@ export const deleteTasks = async (req, resp) => {
     return resp.status(500).json({ message: error.message });
   }
 };
+
+export const toggleTask = async (req, resp)=> {
+  try {
+    const [result] = await pool.query("UPDATE task set done= NOT done WHERE id=?", req.params.id)
+    console.log("task toggled", result)
+    return resp.json(result);
+  } catch (error) {
+    return resp.status(500).json({ message: error.message });
+  }
+}

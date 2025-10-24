@@ -13,7 +13,6 @@ function TaskForm() {
         description: ""
     })
     const params = useParams()
-    console.log("Id ",params)
     const navigate = useNavigate()
 
     useEffect(()=>{
@@ -31,42 +30,45 @@ function TaskForm() {
     },[params.id])
     return (
         <div>
-            <h2>{
-                params.id ? "Edit Task" : "New Task"}</h2>
+            <h1 className='text-xl uppercase text-center text-white font-bold mb-2' >{
+                params.id ? "Edit Task" : "New Task"}</h1>
             <Formik // maneja el estado sin use state
                 initialValues={task }
                 enableReinitialize={true}
-                onSubmit={async (values, actions)=>{
+                onSubmit={async (values, /*actions*/)=>{
                     console.log(values)
                     if(params.id){
                         await updateTask(params.id, values)
                         navigate("/")
                     }else{
                         await createTask(values)
+                        navigate("/")
                         // limpia los campos
-                        actions.resetForm()
+                        //actions.resetForm()
                     }
                         
 
                 }}
             >
                 {({ handleChange, handleSubmit, values, isSubmitting }) => (
-                    <Form onSubmit={handleSubmit}>
-                        <label >Title</label>
+                    <Form onSubmit={handleSubmit} className='bg-slate-300 max-w-sm rounded-md p-4 mx-auto'>
+                        <label className='block'>Title</label>
                         <input 
                             type="text" 
                             name="title" 
                             placeholder='Write a title' 
                             onChange={handleChange} 
-                            value={values.title} />
-                        <label >Description</label>
+                            value={values.title} 
+                            className='bg-amber-200 px-2 py-1 rounded-sm w-full'/>
+                        <label className='block'>Description</label>
                         <textarea 
                             name="description" 
                             placeholder='Write a description' 
                             rows="3" 
                             onChange={handleChange} 
-                            value={values.description}></textarea>
-                        <button type='submit' disabled={isSubmitting}>
+                            value={values.description}
+                             className='bg-amber-200 px-2 py-1 rounded-sm w-full'></textarea>
+                        <button className='block bg-indigo-500 rounded-md px-2 py-1 text-white w-full' type='submit' disabled={isSubmitting}>
                             {isSubmitting? "Saving" : "Save"}
                             </button>
                     </Form>
